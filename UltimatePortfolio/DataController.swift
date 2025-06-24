@@ -66,8 +66,9 @@ class DataController {
     private func delete(_ fetchRequest: NSFetchRequest<NSFetchRequestResult>) {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         batchDeleteRequest.resultType = .resultTypeObjectIDs
-        if let delete = try? container.viewContext.execute(batchDeleteRequest) as? NSBatchDeleteResult {
-            let changes = [NSDeletedObjectsKey: delete.result as? [NSManagedObject] ?? []]
+        if let delete = try? container.viewContext.execute(batchDeleteRequest) as? NSBatchDeleteResult,
+           let objectIDs = delete.result as? [NSManagedObjectID] {
+            let changes = [NSDeletedObjectsKey: objectIDs]
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [container.viewContext])
         }
     }
