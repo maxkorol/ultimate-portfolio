@@ -8,6 +8,15 @@
 import CoreData
 import Observation
 
+enum SortType: String {
+    case dateCreated = "creationDate"
+    case dateModified = "modificationDate"
+}
+
+enum Status {
+    case all, open, closed
+}
+
 @Observable
 class DataController {
     let container: NSPersistentCloudKitContainer
@@ -15,6 +24,11 @@ class DataController {
     var selectedIssue: Issue?
     var filterText = ""
     var filterTokens = [Tag]()
+    var filterEnabled = false
+    var filterPriority = -1
+    var filterStatus = Status.all
+    var sortType = SortType.dateCreated
+    var sortNewestFirst = true
     var state = 0
     var task: Task<Void, Error>?
     
@@ -142,7 +156,19 @@ class DataController {
             let tokenPredicate = NSPredicate(format: "ANY tags IN %@", filterTokens)
             predicates.append(tokenPredicate)
         }
+        if filterEnabled {
+            if filterPriority >= 0 {
+                let priorityPredicate = NSPredicate(format: "priority = %d", filterPriority)
+                predicates.append(priorityPredicate)
+            }
+            if filterStatus != .all {
+                let lookForClosed = filterStatus == .closed
+                let statusFilter = NSPredicate(format: "completed = %@", NSNumber(value: lookForClosed))
+                predicates.append(statusFilter)
+            }
+        }
         let request = Issue.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: sortType.rawValue, ascending: !sortNewestFirst)]
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues.sorted()
