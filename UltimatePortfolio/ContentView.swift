@@ -20,22 +20,6 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Issues")
-            .toolbar {
-                Button("Add Issues") {
-                    for i in 1...5 {
-                        let issue = Issue(context: dataController.container.viewContext)
-                        issue.title = "Issue \(i)"
-                        issue.creationDate = Date.now
-                        issue.content = "Content Goes Here"
-                        issue.priority = 0
-                        issue.completed = Bool.random()
-                    }
-                    dataController.save()
-                }
-                Button("Delete Data") {
-                    dataController.deleteAll()
-                }
-            }
         }
     }
 }
