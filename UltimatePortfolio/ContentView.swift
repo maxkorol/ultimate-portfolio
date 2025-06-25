@@ -10,18 +10,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(DataController.self) private var dataController
-    var issues: [Issue] {
-        let filter = dataController.selectedFilter ?? .all
-        var allIssues: [Issue]
-        if let tag = filter.tag {
-            allIssues = (tag.issues?.allObjects as? [Issue]) ?? []
-        } else {
-            let request = Issue.fetchRequest()
-            request.predicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
-            allIssues = (try? dataController.container.viewContext.fetch(request)) ?? []
-        }
-        return allIssues.sorted()
-    }
+    var issues: [Issue] { dataController.issuesForSelectedFilter() }
     
     var body: some View {
         @Bindable var dataController = dataController
@@ -32,6 +21,18 @@ struct ContentView: View {
                 }
                 .onDelete(perform: delete)
                 .id(dataController.state)
+            }
+            .searchable(
+                text: $dataController.filterText,
+                tokens: $dataController.filterTokens,
+                prompt: "Filter issues, or type # to add tags"
+            ) { tag in
+                Text(tag.tagName)
+            }
+            .searchSuggestions {
+                ForEach(dataController.suggestedFilterTokens) { token in
+                    Text(token.tagName).searchCompletion(token)
+                }
             }
             .navigationTitle("Issues")
         }
