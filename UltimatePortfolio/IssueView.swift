@@ -12,7 +12,6 @@ struct IssueView: View {
     @ObservedObject var issue: Issue
     @Environment(DataController.self) var dataController
     @Environment(\.colorScheme) var colorScheme
-    
     var body: some View {
         Form {
             Section {
@@ -75,5 +74,8 @@ struct IssueView: View {
             }
         }
         .disabled(issue.isDeleted)
+        .onReceive(issue.objectWillChange) {
+            dataController.queueSave()
+        }
     }
 }

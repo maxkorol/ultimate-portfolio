@@ -14,6 +14,7 @@ class DataController {
     var selectedFilter: Filter? = Filter.all
     var selectedIssue: Issue?
     var state = 0
+    var task: Task<Void, Error>?
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -69,6 +70,14 @@ class DataController {
         let allTagsSet = Set(allTags)
         let difference = allTagsSet.symmetricDifference(issue.issueTags)
         return difference.sorted()
+    }
+    
+    func queueSave() {
+        task?.cancel()
+        task = Task { @MainActor in
+            try await Task.sleep(for: .seconds(3))
+            save()
+        }
     }
     
     func save() {

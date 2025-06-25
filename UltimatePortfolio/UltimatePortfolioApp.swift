@@ -11,6 +11,7 @@ import CoreData
 @main
 struct UltimatePortfolioApp: App {
     @State private var dataController = DataController()
+    @Environment(\.scenePhase) var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -23,6 +24,11 @@ struct UltimatePortfolioApp: App {
             }
             .environment(\.managedObjectContext, dataController.container.viewContext)
             .environment(dataController)
+            .onChange(of: scenePhase) { _, new in
+                if new != .active {
+                    dataController.save()
+                }
+            }
         }
     }
 }
