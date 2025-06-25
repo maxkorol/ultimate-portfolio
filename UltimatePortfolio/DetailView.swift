@@ -20,8 +20,6 @@ struct DetailView: View {
             }
         }
         .navigationTitle("Details")
-        #if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .inlineNavBarTitle()
     }
 }
