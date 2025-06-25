@@ -173,4 +173,23 @@ class DataController {
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues.sorted()
     }
+    
+    func newTag() {
+        let tag = Tag(context: container.viewContext)
+        tag.id = UUID()
+        tag.name = "New Tag"
+        save()
+    }
+    
+    func newIssue() {
+        let issue = Issue(context: container.viewContext)
+        issue.title = "New issue"
+        issue.priority = 1
+        issue.creationDate = .now
+        if let tag = selectedFilter?.tag {
+            issue.addToTags(tag)
+        }
+        selectedIssue = issue
+        save()
+    }
 }
