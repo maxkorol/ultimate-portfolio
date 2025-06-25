@@ -12,6 +12,7 @@ import Observation
 class DataController {
     let container: NSPersistentCloudKitContainer
     var selectedFilter: Filter? = Filter.all
+    var state = 0
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -24,11 +25,19 @@ class DataController {
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: container.persistentStoreCoordinator, queue: .main, using: remoteStateChanged)
         container.loadPersistentStores { storeDescripton, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func remoteStateChanged(_ notification: Notification) {
+        state += 1
     }
     
     func createSampleData() {
