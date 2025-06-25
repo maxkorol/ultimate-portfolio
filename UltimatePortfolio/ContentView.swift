@@ -24,8 +24,9 @@ struct ContentView: View {
     }
     
     var body: some View {
+        @Bindable var dataController = dataController
         NavigationStack {
-            List {
+            List(selection: $dataController.selectedIssue) {
                 ForEach(issues) { issue in
                     IssueRow(issue: issue)
                 }
@@ -40,6 +41,9 @@ struct ContentView: View {
         for offset in offsets {
             let item = issues[offset]
             dataController.delete(item)
+            if dataController.selectedIssue == item {
+                dataController.selectedIssue = nil
+            }
         }
     }
 }
