@@ -30,7 +30,7 @@ class DataController {
     var sortType = SortType.dateCreated
     var sortNewestFirst = true
     var state = 0
-    var task: Task<Void, Error>?
+    var saveTask: Task<Void, Error>?
     
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -101,14 +101,15 @@ class DataController {
     }
     
     func queueSave() {
-        task?.cancel()
-        task = Task { @MainActor in
+        saveTask?.cancel()
+        saveTask = Task { @MainActor in
             try await Task.sleep(for: .seconds(3))
             save()
         }
     }
     
     func save() {
+        saveTask?.cancel()
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
         }
