@@ -28,58 +28,20 @@ struct SidebarView: View {
         List(selection: $dataController.selectedFilter) {
             Section("Smart Filters") {
                 ForEach(smartFilters) { filter in
-                    NavigationLink(value: filter) {
-                        Label(LocalizedStringKey(filter.name), systemImage: filter.icon)
-                    }
+                    SmartFilterRow(filter: filter)
                 }
             }
             
             Section("Tags") {
                 ForEach(tagFilters) { filter in
-                    NavigationLink(value: filter) {
-                        Label(filter.name, systemImage: filter.icon)
-                            .badge(filter.activeIssuesCount)
-                            .contextMenu {
-                                Button {
-                                    rename(filter)
-                                } label: {
-                                    Label("Rename", systemImage: "pencil")
-                                }
-                                
-                                Button(role: .destructive) {
-                                    delete(filter)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
-                            .accessibilityElement()
-                            .accessibilityLabel(filter.name)
-                            .accessibilityHint("\(filter.activeIssuesCount) issues")
-                    }
+                    UserFilterRow(filter: filter, delete: delete, rename: rename)
                 }
                 .onDelete(perform: delete)
                 .id(dataController.state)
             }
         }
         .toolbar {
-            Button(action: dataController.newTag) {
-                Label("Add Tag", systemImage: "plus")
-            }
-            
-            Button {
-                showingAwards.toggle()
-            } label: {
-                Label("Show Awards", systemImage: "rosette")
-            }
-            
-            #if DEBUG
-            Button {
-                dataController.deleteAll()
-                dataController.createSampleData()
-            } label: {
-                Label("Add Samples", systemImage: "flame")
-            }
-            #endif
+            SidebarViewToolbar(showingAwards: $showingAwards)
         }
         .alert("Rename Tag", isPresented: $renamingTag) {
             Button("OK", action: completeRename)
