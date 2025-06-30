@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoIssueView: View {
     @Environment(DataController.self) var dataController
-    
+
     var body: some View {
         Text("No Issue Selected")
             .font(.title)

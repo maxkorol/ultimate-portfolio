@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     @Environment(DataController.self) private var dataController
     var issues: [Issue] { dataController.issuesForSelectedFilter() }
-    
+
     var body: some View {
         @Bindable var dataController = dataController
         NavigationStack {
@@ -38,7 +38,7 @@ struct ContentView: View {
             .toolbar(content: ContentViewToolbar.init)
         }
     }
-    
+
     func delete(_ offsets: IndexSet) {
         for offset in offsets {
             let item = issues[offset]
@@ -49,4 +49,3 @@ struct ContentView: View {
         }
     }
 }
-

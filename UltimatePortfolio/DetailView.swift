@@ -10,7 +10,7 @@ import CoreData
 
 struct DetailView: View {
     @Environment(DataController.self) var dataController
-    
+
     var body: some View {
         VStack {
             if let issue = dataController.selectedIssue {

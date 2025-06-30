@@ -10,7 +10,7 @@ import SwiftUI
 struct IssueRow: View {
     @ObservedObject var issue: Issue
     @Environment(DataController.self) var dataController
-    
+
     var body: some View {
         NavigationLink(value: issue) {
             HStack {

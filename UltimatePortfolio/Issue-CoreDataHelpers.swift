@@ -13,39 +13,39 @@ extension Issue {
         get { title ?? "" }
         set { title = newValue }
     }
-    
+
     var issueContent: String {
         get { content ?? "" }
         set { content = newValue }
     }
-    
+
     var issueCreationDate: Date {
         creationDate ?? .now
     }
-    
+
     var issueModificationDate: Date {
         modificationDate ?? .now
     }
-    
+
     var issueTags: [Tag] {
         let result = tags?.allObjects as? [Tag] ?? []
         return result.sorted()
     }
-    
+
     var issueStatus: String {
         completed ? NSLocalizedString("Closed", comment: "Closed") : NSLocalizedString("Open", comment: "Open")
     }
-    
+
     var issueTagsList: String {
         guard let tags else { return NSLocalizedString("No Tags", comment: "No Tags") }
-        
+
         if tags.count == 0 {
             return NSLocalizedString("No Tags", comment: "No Tags")
         } else {
             return issueTags.map(\.tagName).formatted()
         }
     }
-    
+
     static var example: Issue {
         let controller = DataController(inMemory: true)
         let viewContext = controller.container.viewContext
@@ -59,7 +59,7 @@ extension Issue {
 }
 
 extension Issue: Comparable {
-    public static func <(lhs: Issue, rhs: Issue) -> Bool {
+    public static func < (lhs: Issue, rhs: Issue) -> Bool {
         let left = lhs.issueTitle.localizedLowercase
         let right = rhs.issueTitle.localizedLowercase
         if left == right {

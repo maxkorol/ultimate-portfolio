@@ -11,7 +11,7 @@ struct TagsMenuView: View {
     @ObservedObject var issue: Issue
     @Environment(DataController.self) var dataController
     @Environment(\.colorScheme) var colorScheme
-    
+
     var body: some View {
         Menu {
             ForEach(issue.issueTags) { tag in
@@ -24,7 +24,6 @@ struct TagsMenuView: View {
             let otherTags = dataController.missingTags(from: issue)
             if otherTags.isEmpty == false {
                 Divider()
-                
                 Section("Add Tags") {
                     ForEach(otherTags) { tag in
                         Button(tag.tagName) {

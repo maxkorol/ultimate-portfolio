@@ -31,13 +31,13 @@ class DataController {
     var sortNewestFirst = true
     var state = 0
     var saveTask: Task<Void, Error>?
-    
+
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
         dataController.createSampleData()
         return dataController
     }()
-    
+
     var suggestedFilterTokens: [Tag] {
         guard filterText.starts(with: "#") else {
             return []
@@ -49,7 +49,7 @@ class DataController {
         }
         return (try? container.viewContext.fetch(request).sorted()) ?? []
     }
-    
+
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "Main")
         if inMemory {
@@ -57,30 +57,37 @@ class DataController {
         }
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: container.persistentStoreCoordinator, queue: .main, using: remoteStateChanged)
-        container.loadPersistentStores { storeDescripton, error in
+        container.persistentStoreDescriptions.first?.setOption(
+            true as NSNumber,
+            forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey
+        )
+        NotificationCenter.default.addObserver(
+            forName: .NSPersistentStoreRemoteChange,
+            object: container.persistentStoreCoordinator,
+            queue: .main,
+            using: remoteStateChanged
+        )
+        container.loadPersistentStores { _, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
     }
-    
+
     func remoteStateChanged(_ notification: Notification) {
         state += 1
     }
-    
+
     func createSampleData() {
         let viewContext = container.viewContext
-        
-        for i in 1...5 {
+
+        for tagNumber in 1...5 {
             let tag = Tag(context: viewContext)
             tag.id = UUID()
-            tag.name = "Tag \(i)"
-            
-            for j in 1...10 {
+            tag.name = "Tag \(tagNumber)"
+            for issueNumber in 1...10 {
                 let issue = Issue(context: viewContext)
-                issue.title = "Issue \(i)-\(j)"
+                issue.title = "Issue \(tagNumber)-\(issueNumber)"
                 issue.content = "Description goes here"
                 issue.creationDate = Date.now
                 issue.completed = Bool.random()
@@ -88,10 +95,9 @@ class DataController {
                 tag.addToIssues(issue)
             }
         }
-        
         try? viewContext.save()
     }
-    
+
     func missingTags(from issue: Issue) -> [Tag] {
         let request = Tag.fetchRequest()
         let allTags = (try? container.viewContext.fetch(request)) ?? []
@@ -99,7 +105,7 @@ class DataController {
         let difference = allTagsSet.symmetricDifference(issue.issueTags)
         return difference.sorted()
     }
-    
+
     func queueSave() {
         saveTask?.cancel()
         saveTask = Task { @MainActor in
@@ -107,19 +113,19 @@ class DataController {
             save()
         }
     }
-    
+
     func save() {
         saveTask?.cancel()
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
         }
     }
-    
+
     func delete(_ object: NSManagedObject) {
         container.viewContext.delete(object)
         save()
     }
-    
+
     private func delete(_ fetchRequest: NSFetchRequest<NSFetchRequestResult>) {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         batchDeleteRequest.resultType = .resultTypeObjectIDs
@@ -129,7 +135,7 @@ class DataController {
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [container.viewContext])
         }
     }
-    
+
     func deleteAll() {
         let request1: NSFetchRequest<NSFetchRequestResult> = Tag.fetchRequest()
         delete(request1)
@@ -137,7 +143,7 @@ class DataController {
         delete(request2)
         save()
     }
-    
+
     func issuesForSelectedFilter() -> [Issue] {
         let filter = selectedFilter ?? .all
         var predicates = [NSPredicate]()
@@ -150,7 +156,9 @@ class DataController {
         if trimmedFilterText.isEmpty == false {
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
             let contentPredicate = NSPredicate(format: "content CONTAINS[c] %@", trimmedFilterText)
-            let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, contentPredicate])
+            let combinedPredicate = NSCompoundPredicate(
+                orPredicateWithSubpredicates: [titlePredicate, contentPredicate]
+            )
             predicates.append(combinedPredicate)
         }
         if filterTokens.isEmpty == false {
@@ -174,14 +182,14 @@ class DataController {
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues
     }
-    
+
     func newTag() {
         let tag = Tag(context: container.viewContext)
         tag.id = UUID()
         tag.name = NSLocalizedString("New Tag", comment: "Create a new tag")
         save()
     }
-    
+
     func newIssue() {
         let issue = Issue(context: container.viewContext)
         issue.title = NSLocalizedString("New Issue", comment: "Create a new issue")
@@ -193,11 +201,11 @@ class DataController {
         selectedIssue = issue
         save()
     }
-    
+
     func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
         (try? container.viewContext.count(for: fetchRequest)) ?? 0
     }
-    
+
     func hasEarned(award: Award) -> Bool {
         switch award.criterion {
         case "issues":

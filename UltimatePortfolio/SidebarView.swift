@@ -15,14 +15,14 @@ struct SidebarView: View {
     @State private var tagName = ""
     @State private var renamingTag = false
     @State private var showingAwards = false
-    
+
     let smartFilters: [Filter] = [.all, .recent]
     var tagFilters: [Filter] {
         tags.map { tag in
             Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
         }
     }
-    
+
     var body: some View {
         @Bindable var dataController = dataController
         List(selection: $dataController.selectedFilter) {
@@ -31,7 +31,6 @@ struct SidebarView: View {
                     SmartFilterRow(filter: filter)
                 }
             }
-            
             Section("Tags") {
                 ForEach(tagFilters) { filter in
                     UserFilterRow(filter: filter, delete: delete, rename: rename)
@@ -51,28 +50,27 @@ struct SidebarView: View {
         .sheet(isPresented: $showingAwards, content: AwardsView.init)
         .navigationTitle("Filters")
     }
-    
+
     func delete(_ offsets: IndexSet) {
         for offset in offsets {
             let item = tags[offset]
             dataController.delete(item)
         }
     }
-    
+
     func delete(_ filter: Filter) {
         guard let tag = filter.tag else { return }
         dataController.delete(tag)
     }
-    
+
     func rename(_ filter: Filter) {
         tagToRename = filter.tag
         tagName = filter.name
         renamingTag = true
     }
-    
+
     func completeRename() {
         tagToRename?.name = tagName
         dataController.save()
     }
 }
-
