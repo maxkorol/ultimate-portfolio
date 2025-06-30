@@ -33,14 +33,14 @@ extension Issue {
     }
     
     var issueStatus: String {
-        completed ? "Closed" : "Open"
+        completed ? NSLocalizedString("Closed", comment: "Closed") : NSLocalizedString("Open", comment: "Open")
     }
     
     var issueTagsList: String {
-        guard let tags else { return "No Tags" }
+        guard let tags else { return NSLocalizedString("No Tags", comment: "No Tags") }
         
         if tags.count == 0 {
-            return "No tags"
+            return NSLocalizedString("No Tags", comment: "No Tags")
         } else {
             return issueTags.map(\.tagName).formatted()
         }

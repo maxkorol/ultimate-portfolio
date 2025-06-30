@@ -15,9 +15,6 @@ struct AwardsView: View {
     var columns: [GridItem] {
         [GridItem(.adaptive(minimum: 100, maximum: 100))]
     }
-    var awardTitle: String {
-        return dataController.hasEarned(award: selectedAward) ? "Unlocked: \(selectedAward.name)" : "Locked"
-    }
     
     var body: some View {
         NavigationStack {
@@ -33,24 +30,28 @@ struct AwardsView: View {
                                 .scaledToFit()
                                 .padding()
                                 .frame(width: 80, height: 80)
-                                .foregroundColor(
-                                    dataController.hasEarned(award: award)
-                                        ? Color(award.color) : .secondary.opacity(0.5)
-                                )
+                                .foregroundColor(color(for: award))
                         }
-                        .accessibilityLabel(
-                            dataController.hasEarned(award: award) ? "Unlocked: \(award.name)" : "Locked"
-                        )
+                        .accessibilityLabel(label(for: award))
                         .accessibilityHint(award.description)
                     }
                 }
             }
             .navigationTitle("Awards")
             .inlineNavBarTitle()
-            .alert(awardTitle, isPresented: $showingAwardDetails) {
+            .alert(label(for: selectedAward), isPresented: $showingAwardDetails) {
             } message: {
                 Text(selectedAward.description)
             }
         }
+    }
+    
+    func label(for award: Award) -> LocalizedStringKey {
+        dataController.hasEarned(award: selectedAward) ? "Unlocked: \(selectedAward.name)" : "Locked"
+    }
+    
+    func color(for award: Award) -> Color {
+        dataController.hasEarned(award: award)
+            ? Color(award.color) : .secondary.opacity(0.5)
     }
 }

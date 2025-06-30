@@ -1,0 +1,162 @@
+[
+    {
+        "name": "Перші кроки",
+        "description": "Додайте своє перше завдання.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 1,
+        "image": "figure.walk"
+    },
+    {
+        "name": "Чудовий початок",
+        "description": "Додайте 10 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 10,
+        "image": "hand.thumbsup.fill"
+    },
+    {
+        "name": "Рухаємося вперед",
+        "description": "Додайте 20 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 20,
+        "image": "tray.and.arrow.up.fill"
+    },
+    {
+        "name": "Набираємо обертів",
+        "description": "Додайте 50 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 50,
+        "image": "speedometer"
+    },
+    {
+        "name": "Збурюємо хвилі",
+        "description": "Додайте 100 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 100,
+        "image": "dot.radiowaves.left.and.right"
+    },
+    {
+        "name": "Високий результат",
+        "description": "Додайте 250 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 250,
+        "image": "square.stack.3d.up.fill"
+    },
+    {
+        "name": "Зірковий результат",
+        "description": "Додайте 500 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 500,
+        "image": "star.circle.fill"
+    },
+    {
+        "name": "Чемпіон результативності",
+        "description": "Додайте 1000 завдань.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 1000,
+        "image": "crown.fill"
+    },
+    {
+        "name": "Відмічено",
+        "description": "Закрийте своє перше завдання.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 1,
+        "image": "checkmark.shield.fill"
+    },
+    {
+        "name": "Ви на висоті",
+        "description": "Закрийте 10 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 10,
+        "image": "guitars.fill"
+    },
+    {
+        "name": "20 — це круто",
+        "description": "Закрийте 20 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 20,
+        "image": "20.square.fill"
+    },
+    {
+        "name": "Влучно в ціль!",
+        "description": "Закрийте 50 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 50,
+        "image": "target"
+    },
+    {
+        "name": "Високо літаєте",
+        "description": "Закрийте 100 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 100,
+        "image": "airplane.circle.fill"
+    },
+    {
+        "name": "Ви у вогні!",
+        "description": "Закрийте 250 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 250,
+        "image": "flame.fill"
+    },
+    {
+        "name": "Майстер відміток",
+        "description": "Закрийте 500 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 500,
+        "image": "text.badge.checkmark"
+    },
+    {
+        "name": "Бум!",
+        "description": "Закрийте 1000 завдань.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 1000,
+        "image": "bolt.circle.fill"
+    },
+    {
+        "name": "Гра з тегами",
+        "description": "Ви створили свій перший тег.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 1,
+        "image": "tag.fill"
+    },
+    {
+        "name": "Боротьба з тегами",
+        "description": "Ви створили 10 тегів.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 10,
+        "image": "tag.circle.fill"
+    },
+    {
+        "name": "Головний тегер",
+        "description": "Ви створили 50 тегів.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 50,
+        "image": "square.grid.3x1.folder.fill.badge.plus"
+    },
+    {
+        "name": "Підтримувач",
+        "description": "Ви придбали преміум-розблокування.",
+        "color": "Purple",
+        "criterion": "unlock",
+        "value": 0,
+        "image": "dollarsign.square.fill"
+    }
+]
