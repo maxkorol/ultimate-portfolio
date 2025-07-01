@@ -7,6 +7,7 @@
 
 import CoreData
 import Observation
+import SwiftUI
 
 enum SortType: String {
     case dateCreated = "creationDate"
@@ -81,6 +82,12 @@ class DataController {
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
+            #if DEBUG
+            if CommandLine.arguments.contains("enable-testing") {
+                self.deleteAll()
+                UIView.setAnimationsEnabled(false)
+            }
+            #endif
         }
     }
 
