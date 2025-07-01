@@ -52,7 +52,7 @@ extension Issue {
         let issue = Issue(context: viewContext)
         issue.title = "Example Issue"
         issue.content = "This is an example issue."
-        issue.priority = 2
+        issue.priority = 1
         issue.creationDate = .now
         return issue
     }
