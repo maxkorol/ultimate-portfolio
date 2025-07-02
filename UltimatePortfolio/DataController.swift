@@ -32,6 +32,9 @@ class DataController {
     var sortNewestFirst = true
     var state = 0
     var saveTask: Task<Void, Error>?
+    var storeTask: Task<Void, Never>?
+    var defaults: UserDefaults
+    var fullVersionUnlocked: Bool
     private var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
 
     static var preview: DataController = {
@@ -62,8 +65,13 @@ class DataController {
         return managedObjectModel
     }()
 
-    init(inMemory: Bool = false) {
+    init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
+        self.defaults = defaults
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
+        fullVersionUnlocked = defaults.bool(forKey: "fullVersionUnlocked")
+        storeTask = Task {
+            await monitorTransactions()
+        }
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
@@ -83,15 +91,18 @@ class DataController {
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
-            
+
             if let description = self?.container.persistentStoreDescriptions.first {
                 description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
                 if let coordinator = self?.container.persistentStoreCoordinator {
-                    self?.spotlightDelegate = NSCoreDataCoreSpotlightDelegate(forStoreWith: description, coordinator: coordinator)
+                    self?.spotlightDelegate = NSCoreDataCoreSpotlightDelegate(
+                        forStoreWith: description,
+                        coordinator: coordinator
+                    )
                     self?.spotlightDelegate?.startSpotlightIndexing()
                 }
             }
-            
+
             #if DEBUG
             if CommandLine.arguments.contains("enable-testing") {
                 self?.deleteAll()
@@ -210,11 +221,19 @@ class DataController {
         return allIssues
     }
 
-    func newTag() {
+    func newTag() -> Bool {
+        var shouldCreate = fullVersionUnlocked
+        if shouldCreate == false {
+            shouldCreate = count(for: Tag.fetchRequest()) < 3
+        }
+        guard shouldCreate else {
+            return false
+        }
         let tag = Tag(context: container.viewContext)
         tag.id = UUID()
         tag.name = NSLocalizedString("New Tag", comment: "Create a new tag")
         save()
+        return true
     }
 
     func newIssue() {
@@ -252,7 +271,7 @@ class DataController {
             return false
         }
     }
-    
+
     func issue(with uniqueIdentifier: String) -> Issue? {
         guard let url = URL(string: uniqueIdentifier) else {
             return nil
