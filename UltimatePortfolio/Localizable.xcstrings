@@ -157,9 +157,6 @@
         }
       }
     },
-    "Buy Now" : {
-
-    },
     "Cancel" : {
       "localizations" : {
         "uk" : {
@@ -291,6 +288,16 @@
         }
       }
     },
+    "Fetching offerts..." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантаження пропозицій…"
+          }
+        }
+      }
+    },
     "Filter" : {
       "localizations" : {
         "uk" : {
@@ -321,6 +328,16 @@
         }
       }
     },
+    "Get the most out of the app" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримайте повний доступ"
+          }
+        }
+      }
+    },
     "High" : {
       "localizations" : {
         "uk" : {
@@ -337,6 +354,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Високий пріоритет"
+          }
+        }
+      }
+    },
+    "In-app purchases are disabled" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупки в додатках вимкнено"
           }
         }
       }
@@ -556,6 +583,16 @@
         }
       }
     },
+    "Restore Purchases" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновити покупки"
+          }
+        }
+      }
+    },
     "Show Awards" : {
       "localizations" : {
         "uk" : {
@@ -582,6 +619,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Смарт Фільтри"
+          }
+        }
+      }
+    },
+    "Sorry, there was an error loading our store." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибачте, сталась помилка при завантаженні даних."
           }
         }
       }
@@ -646,6 +693,16 @@
         }
       }
     },
+    "Try Again" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спробувати ще"
+          }
+        }
+      }
+    },
     "Turn Filter Off" : {
       "localizations" : {
         "uk" : {
@@ -672,6 +729,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відблоковано: %@"
+          }
+        }
+      }
+    },
+    "Upgrade Today!" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримайте доступ сьогодні!"
+          }
+        }
+      }
+    },
+    "You can't purchase the premium unlock because in-app purchases are disabled on this device.\n\nPlease ask whomever manages your device for assitance." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви не можете придбати преміум-розблокування, оскільки покупки в додатку вимкнено на цьому пристрої.\n\nЗверніться по допомогу до того, хто керує вашим пристроєм."
           }
         }
       }

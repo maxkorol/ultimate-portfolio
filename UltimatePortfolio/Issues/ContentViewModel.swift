@@ -18,6 +18,10 @@ extension ContentView {
         init(dataController: DataController) {
             self.dataController = dataController
         }
+        
+        var shouldRequestReview: Bool {
+            dataController.count(for: Tag.fetchRequest()) >= 5
+        }
 
         func delete(_ offsets: IndexSet) {
             for offset in offsets {

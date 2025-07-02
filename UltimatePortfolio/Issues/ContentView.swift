@@ -7,9 +7,11 @@
 
 import SwiftUI
 import CoreData
+import StoreKit
 
 struct ContentView: View {
     @State private var viewModel: ViewModel
+    @Environment(\.requestReview) var requestReview
 
     var body: some View {
         NavigationStack {
@@ -35,10 +37,17 @@ struct ContentView: View {
             .navigationTitle("Issues")
             .toolbar(content: ContentViewToolbar.init)
         }
+        .onAppear(perform: askForReview)
     }
 
     init(dataController: DataController) {
         let viewModel = ViewModel(dataController: dataController)
         _viewModel = State(initialValue: viewModel)
+    }
+
+    func askForReview() {
+        if viewModel.shouldRequestReview {
+            requestReview()
+        }
     }
 }

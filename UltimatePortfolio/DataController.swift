@@ -8,6 +8,7 @@
 import CoreData
 import Observation
 import SwiftUI
+import StoreKit
 
 enum SortType: String {
     case dateCreated = "creationDate"
@@ -36,6 +37,7 @@ class DataController {
     var defaults: UserDefaults
     var fullVersionUnlocked: Bool
     private var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
+    var products = [Product]()
 
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
@@ -267,6 +269,8 @@ class DataController {
             let fetchRequest = Tag.fetchRequest()
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
+        case "unlock":
+            return fullVersionUnlocked
         default:
             return false
         }
@@ -280,5 +284,11 @@ class DataController {
             return nil
         }
         return try? container.viewContext.existingObject(with: id) as? Issue
+    }
+
+    func loadProducts() async throws {
+        guard products.isEmpty else { return }
+        try await Task.sleep(for: .seconds(0.2))
+        products = try await Product.products(for: [Self.unlockPremiumProductID])
     }
 }
