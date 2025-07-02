@@ -9,28 +9,26 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(DataController.self) private var dataController
-    var issues: [Issue] { dataController.issuesForSelectedFilter() }
+    @State private var viewModel: ViewModel
 
     var body: some View {
-        @Bindable var dataController = dataController
         NavigationStack {
-            List(selection: $dataController.selectedIssue) {
-                ForEach(issues) { issue in
+            List(selection: $viewModel.selectedIssue) {
+                ForEach(viewModel.issues) { issue in
                     IssueRow(issue: issue)
                 }
-                .onDelete(perform: delete)
-                .id(dataController.state)
+                .onDelete(perform: viewModel.delete)
+                .id(viewModel.state)
             }
             .searchable(
-                text: $dataController.filterText,
-                tokens: $dataController.filterTokens,
+                text: $viewModel.filterText,
+                tokens: $viewModel.filterTokens,
                 prompt: "Filter issues, or type # to add tags"
             ) { tag in
                 Text(tag.tagName)
             }
             .searchSuggestions {
-                ForEach(dataController.suggestedFilterTokens) { token in
+                ForEach(viewModel.suggestedFilterTokens) { token in
                     Text(token.tagName).searchCompletion(token)
                 }
             }
@@ -39,13 +37,8 @@ struct ContentView: View {
         }
     }
 
-    func delete(_ offsets: IndexSet) {
-        for offset in offsets {
-            let item = issues[offset]
-            dataController.delete(item)
-            if dataController.selectedIssue == item {
-                dataController.selectedIssue = nil
-            }
-        }
+    init(dataController: DataController) {
+        let viewModel = ViewModel(dataController: dataController)
+        _viewModel = State(initialValue: viewModel)
     }
 }

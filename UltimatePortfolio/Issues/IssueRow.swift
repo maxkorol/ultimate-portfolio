@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct IssueRow: View {
-    @ObservedObject var issue: Issue
-    @Environment(DataController.self) var dataController
+    @State private var viewModel: ViewModel
 
     var body: some View {
-        NavigationLink(value: issue) {
+        NavigationLink(value: viewModel.issue) {
             HStack {
                 Image(systemName: "exclamationmark.circle")
                     .imageScale(.large)
-                    .opacity(issue.priority == 2 ? 1 : 0)
-                    .accessibilityIdentifier(issue.priority == 2 ? "\(issue.issueTitle) High Priority" : "")
+                    .opacity(viewModel.iconOpacity)
+                    .accessibilityIdentifier(viewModel.accessibilityIdentifier)
                 VStack(alignment: .leading) {
-                    Text(issue.issueTitle)
+                    Text(viewModel.issueTitle)
                         .font(.headline)
                         .lineLimit(1)
-                    Text(issue.issueTagsList)
+                    Text(viewModel.issueTagsList)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text(issue.issueCreationDate.formatted(date: .numeric, time: .omitted))
-                        .accessibilityLabel(issue.issueCreationDate.formatted(date: .abbreviated, time: .omitted))
+                    Text(viewModel.creationDate)
+                        .accessibilityLabel(viewModel.accessibilityCreationDate)
                         .font(.subheadline)
-                    if issue.completed {
+                    if viewModel.completed {
                         Text("CLOSED")
                             .font(.body.smallCaps())
                     }
@@ -39,7 +38,11 @@ struct IssueRow: View {
                 .foregroundStyle(.secondary)
             }
         }
-        .accessibilityHint(issue.priority == 2 ? "High priority" : "")
-        .accessibilityIdentifier(issue.issueTitle)
+        .accessibilityHint(viewModel.accessibilityHint)
+        .accessibilityIdentifier(viewModel.issueTitle)
+    }
+
+    init(issue: Issue) {
+        _viewModel = State(initialValue: ViewModel(issue: issue))
     }
 }
