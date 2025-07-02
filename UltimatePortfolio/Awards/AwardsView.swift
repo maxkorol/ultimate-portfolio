@@ -30,7 +30,7 @@ struct AwardsView: View {
                                 .scaledToFit()
                                 .padding()
                                 .frame(width: 80, height: 80)
-                                .foregroundColor(color(for: award))
+                                .foregroundStyle(color(for: award))
                         }
                         .accessibilityLabel(label(for: award))
                         .accessibilityHint(award.description)

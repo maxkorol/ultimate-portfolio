@@ -37,10 +37,11 @@ extension Issue {
     }
 
     var issueTagsList: String {
-        guard let tags else { return NSLocalizedString("No Tags", comment: "No Tags") }
+        let noTags = NSLocalizedString("No Tags", comment: "No Tags")
+        guard let tags else { return noTags }
 
         if tags.count == 0 {
-            return NSLocalizedString("No Tags", comment: "No Tags")
+            return noTags
         } else {
             return issueTags.map(\.tagName).formatted()
         }
