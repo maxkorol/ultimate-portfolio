@@ -11,6 +11,9 @@ import CoreData
 struct IssueView: View {
     @ObservedObject var issue: Issue
     @Environment(DataController.self) var dataController
+    @Environment(\.openURL) var openURL
+    @State private var showNotificationsError = false
+
     var body: some View {
         Form {
             Section {
@@ -41,6 +44,17 @@ struct IssueView: View {
                               prompt: Text("Enter the issue description here"), axis: .vertical)
                 }
             }
+
+            Section("Reminders") {
+                Toggle("Show reminders", isOn: $issue.reminderEnabled.animation())
+                if issue.reminderEnabled {
+                    DatePicker(
+                        "Reminder Time",
+                        selection: $issue.issueReminderTime,
+                        displayedComponents: .hourAndMinute
+                    )
+                }
+            }
         }
         .disabled(issue.isDeleted)
         .onReceive(issue.objectWillChange) {
@@ -49,6 +63,38 @@ struct IssueView: View {
         .onSubmit(dataController.save)
         .toolbar {
             IssueViewToolbar(issue: issue)
+        }
+        .alert("Oops!", isPresented: $showNotificationsError) {
+            Button("Check Settings", action: showAppNotificationSettings)
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("There was a problem setting your notification. Please check you have notifications enabled.")
+        }
+        .onChange(of: issue.reminderEnabled) {
+            updateReminder()
+        }
+        .onChange(of: issue.reminderTime) {
+            updateReminder()
+        }
+    }
+
+    func showAppNotificationSettings() {
+        guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
+            return
+        }
+        openURL(settingsURL)
+    }
+
+    func updateReminder() {
+        dataController.removeReminders(for: issue)
+        Task {
+            if issue.reminderEnabled {
+                let success = await dataController.addReminder(for: issue)
+                if !success {
+                    issue.reminderEnabled = false
+                    showNotificationsError = true
+                }
+            }
         }
     }
 }

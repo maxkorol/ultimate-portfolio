@@ -167,6 +167,16 @@
         }
       }
     },
+    "Check Settings" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перевірте налаштування"
+          }
+        }
+      }
+    },
     "Close Issue" : {
       "localizations" : {
         "uk" : {
@@ -451,6 +461,16 @@
         }
       }
     },
+    "Oops!" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помилка"
+          }
+        }
+      }
+    },
     "Open" : {
       "comment" : "Open",
       "localizations" : {
@@ -493,6 +513,26 @@
         }
       }
     },
+    "Reminder Time" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Час нагадування"
+          }
+        }
+      }
+    },
+    "Reminders" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нагадування"
+          }
+        }
+      }
+    },
     "Rename" : {
       "localizations" : {
         "uk" : {
@@ -519,6 +559,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показати нагороди"
+          }
+        }
+      }
+    },
+    "Show reminders" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ввімкнути нагадування"
           }
         }
       }
@@ -569,6 +619,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Теги"
+          }
+        }
+      }
+    },
+    "There was a problem setting your notification. Please check you have notifications enabled." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалось встановити нагадування. Будь ласка перевірте чи ввімкнені нагадування в системних налаштуваннях."
           }
         }
       }
