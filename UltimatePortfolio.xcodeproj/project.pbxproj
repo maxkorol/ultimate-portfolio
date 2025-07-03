@@ -84,6 +84,7 @@
 				"Extensions/Issue-CoreDataHelpers.swift",
 				"Extensions/Tag-CoreDataHelpers.swift",
 				Filters/Filter.swift,
+				Localizable.xcstrings,
 			);
 			target = 50FE7DDE2E16B9F300D7BF31 /* PortfolioWidgetExtension */;
 		};

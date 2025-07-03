@@ -480,6 +480,16 @@
         }
       }
     },
+    "Next up..." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Далі..."
+          }
+        }
+      }
+    },
     "No Issue Selected" : {
       "localizations" : {
         "uk" : {
@@ -497,6 +507,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Без тегів"
+          }
+        }
+      }
+    },
+    "Nothing" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Немає багів"
           }
         }
       }
@@ -763,6 +783,16 @@
         }
       }
     },
+    "Up next..." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Далі…"
+          }
+        }
+      }
+    },
     "Upgrade Today!" : {
       "localizations" : {
         "uk" : {
@@ -773,12 +803,32 @@
         }
       }
     },
+    "You #1 top-priority issue." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш найважливіший баг"
+          }
+        }
+      }
+    },
     "You can't purchase the premium unlock because in-app purchases are disabled on this device.\n\nPlease ask whomever manages your device for assitance." : {
       "localizations" : {
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви не можете придбати преміум-розблокування, оскільки покупки в додатку вимкнено на цьому пристрої.\n\nЗверніться по допомогу до того, хто керує вашим пристроєм."
+          }
+        }
+      }
+    },
+    "Your most important issues." : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваші найважливіші баги"
           }
         }
       }

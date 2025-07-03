@@ -1,5 +1,5 @@
 //
-//  PortfolioWidget.swift
+//  SimplePortfolioWidget.swift
 //  PortfolioWidget
 //
 //  Created by Max Korol on 03/07/2025.
@@ -13,7 +13,7 @@ struct SimpleEntry: TimelineEntry {
     let issues: [Issue]
 }
 
-struct PortfolioWidgetEntryView: View {
+struct SimplePortfolioWidgetEntryView: View {
     var entry: SimpleEntry
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct PortfolioWidgetEntryView: View {
     }
 }
 
-struct PortfolioWidgetTimelineProvider: TimelineProvider {
+struct SimpleProvider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: .now, issues: [.example])
     }
@@ -52,17 +52,23 @@ struct PortfolioWidgetTimelineProvider: TimelineProvider {
     }
 }
 
-struct PortfolioWidget: Widget {
-    let kind: String = "PortfolioWidget"
+struct SimplePortfolioWidget: Widget {
+    let kind: String = "SimplePortfolioWidget"
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PortfolioWidgetTimelineProvider()) { entry in
-            PortfolioWidgetEntryView(entry: entry)
+        StaticConfiguration(
+            kind: kind,
+            provider: SimpleProvider()
+        ) { entry in
+            SimplePortfolioWidgetEntryView(entry: entry)
         }
+        .supportedFamilies([.systemSmall])
+        .configurationDisplayName("Up next...")
+        .description("You #1 top-priority issue.")
     }
 }
 
 #Preview(as: .systemSmall) {
-    PortfolioWidget()
+    SimplePortfolioWidget()
 } timeline: {
     SimpleEntry(date: .now, issues: [.example])
 }

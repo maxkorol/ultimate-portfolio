@@ -33,6 +33,15 @@ extension ContentView {
             }
         }
 
+        func openURL(url: URL) {
+            if url.absoluteString.contains("newIssue") {
+                dataController.newIssue()
+            } else if let issue = dataController.issue(with: url.absoluteString) {
+                dataController.selectedIssue = issue
+                dataController.selectedFilter = .all
+            }
+        }
+
         subscript<Value>(dynamicMember keyPath: KeyPath<DataController, Value>) -> Value {
             dataController[keyPath: keyPath]
         }
