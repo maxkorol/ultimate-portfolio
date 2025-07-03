@@ -197,6 +197,16 @@
         }
       }
     },
+    "Close" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрити"
+          }
+        }
+      }
+    },
     "Close Issue" : {
       "localizations" : {
         "uk" : {
@@ -599,16 +609,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Час нагадування"
-          }
-        }
-      }
-    },
-    "Reminders" : {
-      "localizations" : {
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Нагадування"
           }
         }
       }

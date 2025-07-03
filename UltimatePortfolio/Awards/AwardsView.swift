@@ -9,6 +9,9 @@ import SwiftUI
 
 struct AwardsView: View {
     @Environment(DataController.self) var dataController
+    #if os(macOS)
+    @Environment(\.dismiss) var dismiss
+    #endif
     @State private var selectedAward = Award.example
     @State private var showingAwardDetails = false
 
@@ -34,16 +37,26 @@ struct AwardsView: View {
                         }
                         .accessibilityLabel(label(for: award))
                         .accessibilityHint(award.description)
+                        .buttonStyle(.borderless)
                     }
                 }
+                .padding(.vertical)
             }
             .navigationTitle("Awards")
-            .inlineNavBarTitle()
+            #if os(macOS)
+            .toolbar {
+                Button("Close") {
+                    dismiss()
+                }
+            }
+            #endif
+            .inlineNavigationBar()
             .alert(label(for: selectedAward), isPresented: $showingAwardDetails) {
             } message: {
                 Text(selectedAward.description)
             }
         }
+        .macFrame(minWidth: 600, maxHeight: 500)
     }
 
     func color(for award: Award) -> Color {

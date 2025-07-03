@@ -37,6 +37,7 @@ struct ContentView: View {
             .navigationTitle("Issues")
             .toolbar(content: ContentViewToolbar.init)
         }
+        .macFrame(minWidth: 220)
         .onAppear(perform: askForReview)
         .onOpenURL(perform: viewModel.openURL)
     }

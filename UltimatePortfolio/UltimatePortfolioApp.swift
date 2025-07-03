@@ -13,7 +13,9 @@ import CoreSpotlight
 struct UltimatePortfolioApp: App {
     @State private var dataController = DataController.shared
     @Environment(\.scenePhase) var scenePhase
+    #if os(iOS)
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    #endif
 
     var body: some Scene {
         WindowGroup {

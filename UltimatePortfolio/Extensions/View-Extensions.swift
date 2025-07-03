@@ -8,11 +8,24 @@
 import SwiftUI
 
 extension View {
-    func inlineNavBarTitle() -> some View {
-        #if os(iOS)
-        return self.navigationBarTitleDisplayMode(.inline)
-        #else
+    func inlineNavigationBar() -> some View {
+        #if os(macOS)
         return self
+        #else
+        return self.navigationBarTitleDisplayMode(.inline)
+        #endif
+    }
+
+    func macFrame(
+        minWidth: CGFloat? = nil,
+        maxWidth: CGFloat? = nil,
+        minHeight: CGFloat? = nil,
+        maxHeight: CGFloat? = nil
+    ) -> some View {
+        #if os(macOS)
+        self.frame(minWidth: minWidth, maxWidth: maxWidth, minHeight: minHeight, maxHeight: maxHeight)
+        #else
+        self
         #endif
     }
 }

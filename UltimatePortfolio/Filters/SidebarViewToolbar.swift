@@ -17,11 +17,13 @@ struct SidebarViewToolbar: View {
             Label("Add Tag", systemImage: "plus")
         }
         .sheet(isPresented: $showingStore, content: StoreView.init)
+        .help("Add Tag")
         Button {
             showingAwards.toggle()
         } label: {
             Label("Show Awards", systemImage: "rosette")
         }
+        .help("Show Awards")
         #if DEBUG
         Button {
             dataController.deleteAll()
@@ -29,6 +31,7 @@ struct SidebarViewToolbar: View {
         } label: {
             Label("Add Samples", systemImage: "flame")
         }
+        .help("Add Samples")
         #endif
     }
 

@@ -26,6 +26,9 @@ struct SimplePortfolioWidgetEntryView: View {
                     .font(.title)
             }
         }
+        .containerBackground(for: .widget) {
+            Color.clear
+        }
     }
 }
 

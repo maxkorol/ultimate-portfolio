@@ -20,6 +20,7 @@ struct IssueView: View {
                 VStack(alignment: .leading) {
                     TextField("Title", text: $issue.issueTitle, prompt: Text("Enter the issue title here"))
                         .font(.title)
+                        .labelsHidden()
                     Text("**Modified:** \(issue.issueModificationDate.formatted(date: .long, time: .shortened))")
                         .foregroundStyle(.secondary)
                     Text("**Status:** \(issue.issueStatus)")
@@ -40,12 +41,17 @@ struct IssueView: View {
                     Text("Basic Information")
                         .font(.title2)
                         .foregroundStyle(.secondary)
-                    TextField("Description", text: $issue.issueContent,
-                              prompt: Text("Enter the issue description here"), axis: .vertical)
+                    TextField(
+                        "Description",
+                        text: $issue.issueContent,
+                        prompt: Text("Enter the issue description here"),
+                        axis: .vertical
+                    )
+                    .labelsHidden()
                 }
             }
 
-            Section("Reminders") {
+            Section {
                 Toggle("Show reminders", isOn: $issue.reminderEnabled.animation())
                 if issue.reminderEnabled {
                     DatePicker(
@@ -56,6 +62,7 @@ struct IssueView: View {
                 }
             }
         }
+        .formStyle(.grouped)
         .disabled(issue.isDeleted)
         .onReceive(issue.objectWillChange) {
             dataController.queueSave()
@@ -79,10 +86,18 @@ struct IssueView: View {
     }
 
     func showAppNotificationSettings() {
+        #if os(macOS)
+        let notificationsPath = "x-apple.systempreferences:com.apple.Notifications-Settings.extension"
+        let bundleId = Bundle.main.bundleIdentifier
+        if let url = URL(string: "\(notificationsPath)?id=\(bundleId ?? "")") {
+            NSWorkspace.shared.open(url)
+        }
+        #else
         guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
             return
         }
         openURL(settingsURL)
+        #endif
     }
 
     func updateReminder() {

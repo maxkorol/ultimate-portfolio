@@ -56,6 +56,9 @@ struct ComplexPortfolioWidgetEntryView: View {
                 }
             }
         }
+        .containerBackground(for: .widget) {
+            Color.clear
+        }
     }
 }
 

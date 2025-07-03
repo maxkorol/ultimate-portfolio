@@ -35,6 +35,7 @@ struct SidebarView: View {
         }
         .sheet(isPresented: $viewModel.showingAwards, content: AwardsView.init)
         .navigationTitle("Filters")
+        .macFrame(minWidth: 220)
     }
 
     init(dataController: DataController) {
