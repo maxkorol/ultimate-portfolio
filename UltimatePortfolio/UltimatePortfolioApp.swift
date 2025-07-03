@@ -11,7 +11,7 @@ import CoreSpotlight
 
 @main
 struct UltimatePortfolioApp: App {
-    @State private var dataController = DataController()
+    @State private var dataController = DataController.shared
     @Environment(\.scenePhase) var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 

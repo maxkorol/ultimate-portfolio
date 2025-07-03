@@ -21,6 +21,7 @@ enum Status {
 
 @Observable
 class DataController {
+    static let shared = DataController()
     let container: NSPersistentCloudKitContainer
     var selectedFilter: Filter? = Filter.all
     var selectedIssue: Issue?
@@ -238,9 +239,9 @@ class DataController {
         return true
     }
 
-    func newIssue() {
+    func newIssue(title: String? = nil) {
         let issue = Issue(context: container.viewContext)
-        issue.title = NSLocalizedString("New Issue", comment: "Create a new issue")
+        issue.title = title ?? NSLocalizedString("New Issue", comment: "Create a new issue")
         issue.priority = 1
         issue.creationDate = .now
         if let tag = selectedFilter?.tag {

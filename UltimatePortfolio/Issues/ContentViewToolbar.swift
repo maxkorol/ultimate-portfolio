@@ -54,7 +54,9 @@ struct ContentViewToolbar: View {
                 .symbolVariant(dataController.filterEnabled ? .fill : .none)
         }
 
-        Button(action: dataController.newIssue) {
+        Button {
+            dataController.newIssue()
+        } label: {
             Label("New Issue", systemImage: "square.and.pencil")
         }
     }

@@ -86,6 +86,26 @@
         }
       }
     },
+    "Add an issue" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати баг"
+          }
+        }
+      }
+    },
+    "Add Issue" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати баг"
+          }
+        }
+      }
+    },
     "Add Samples" : {
       "localizations" : {
         "uk" : {
@@ -264,6 +284,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Деталі"
+          }
+        }
+      }
+    },
+    "Enter issue title" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть назву"
           }
         }
       }
