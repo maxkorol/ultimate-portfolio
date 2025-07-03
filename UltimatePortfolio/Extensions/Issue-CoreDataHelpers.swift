@@ -26,7 +26,7 @@ extension Issue {
     var issueModificationDate: Date {
         modificationDate ?? .now
     }
-    
+
     var issueReminderTime: Date {
         get { reminderTime ?? .now }
         set { reminderTime = newValue }
