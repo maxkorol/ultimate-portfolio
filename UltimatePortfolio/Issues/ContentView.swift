@@ -11,17 +11,24 @@ import StoreKit
 
 struct ContentView: View {
     @State private var viewModel: ViewModel
+    #if !os(watchOS)
     @Environment(\.requestReview) var requestReview
+    #endif
 
     var body: some View {
         NavigationStack {
             List(selection: $viewModel.selectedIssue) {
                 ForEach(viewModel.issues) { issue in
+                    #if os(watchOS)
+                    IssueRowWatch(issue: issue)
+                    #else
                     IssueRow(issue: issue)
+                    #endif
                 }
                 .onDelete(perform: viewModel.delete)
                 .id(viewModel.state)
             }
+            #if !os(watchOS)
             .searchable(
                 text: $viewModel.filterText,
                 tokens: $viewModel.filterTokens,
@@ -34,11 +41,14 @@ struct ContentView: View {
                     Text(token.tagName).searchCompletion(token)
                 }
             }
+            #endif
             .navigationTitle("Issues")
             .toolbar(content: ContentViewToolbar.init)
         }
         .macFrame(minWidth: 220)
+        #if !os(watchOS)
         .onAppear(perform: askForReview)
+        #endif
         .onOpenURL(perform: viewModel.openURL)
     }
 
@@ -47,9 +57,11 @@ struct ContentView: View {
         _viewModel = State(initialValue: viewModel)
     }
 
+    #if !os(watchOS)
     func askForReview() {
         if viewModel.shouldRequestReview {
             requestReview()
         }
     }
+    #endif
 }

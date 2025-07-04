@@ -72,7 +72,9 @@ struct IssueView: View {
             IssueViewToolbar(issue: issue)
         }
         .alert("Oops!", isPresented: $showNotificationsError) {
+            #if !os(watchOS)
             Button("Check Settings", action: showAppNotificationSettings)
+            #endif
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("There was a problem setting your notification. Please check you have notifications enabled.")
@@ -92,7 +94,7 @@ struct IssueView: View {
         if let url = URL(string: "\(notificationsPath)?id=\(bundleId ?? "")") {
             NSWorkspace.shared.open(url)
         }
-        #else
+        #elseif os(iOS)
         guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
             return
         }

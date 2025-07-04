@@ -13,6 +13,9 @@ struct TagsMenuView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
+        #if os(watchOS)
+        LabeledContent("Tags", value: issue.issueTagsList)
+        #else
         Menu {
             ForEach(issue.issueTags) { tag in
                 Button {
@@ -45,5 +48,6 @@ struct TagsMenuView: View {
                 )
                 #endif
         }
+        #endif
     }
 }

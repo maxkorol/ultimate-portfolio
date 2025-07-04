@@ -38,7 +38,9 @@ class DataController {
     var storeTask: Task<Void, Never>?
     var defaults: UserDefaults
     var fullVersionUnlocked: Bool
+    #if canImport(CoreSpotlight)
     private var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
+    #endif
     var products = [Product]()
 
     static var preview: DataController = {
@@ -105,6 +107,7 @@ class DataController {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
 
+            #if canImport(CoreSpotlight)
             if let description = self?.container.persistentStoreDescriptions.first {
                 description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
                 if let coordinator = self?.container.persistentStoreCoordinator {
@@ -115,15 +118,9 @@ class DataController {
                     self?.spotlightDelegate?.startSpotlightIndexing()
                 }
             }
-
-            #if DEBUG
-            if CommandLine.arguments.contains("enable-testing") {
-                self?.deleteAll()
-                #if os(iOS)
-                UIView.setAnimationsEnabled(false)
-                #endif
-            }
             #endif
+
+            self?.checkForTesting()
         }
     }
 

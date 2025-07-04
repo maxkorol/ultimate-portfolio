@@ -28,4 +28,12 @@ extension View {
         self
         #endif
     }
+
+    func numberBadge(_ number: Int) -> some View {
+        #if os(watchOS)
+        return self
+        #else
+        return self.badge(number)
+        #endif
+    }
 }
