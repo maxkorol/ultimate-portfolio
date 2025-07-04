@@ -34,7 +34,6 @@ class DataController {
     var sortType = SortType.dateCreated
     var sortNewestFirst = true
     var state = 0
-    var saveTask: Task<Void, Error>?
     var storeTask: Task<Void, Never>?
     var defaults: UserDefaults
     var fullVersionUnlocked: Bool
@@ -156,16 +155,7 @@ class DataController {
         return difference.sorted()
     }
 
-    func queueSave() {
-        saveTask?.cancel()
-        saveTask = Task { @MainActor in
-            try await Task.sleep(for: .seconds(3))
-            save()
-        }
-    }
-
     func save() {
-        saveTask?.cancel()
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
             WidgetCenter.shared.reloadAllTimelines()

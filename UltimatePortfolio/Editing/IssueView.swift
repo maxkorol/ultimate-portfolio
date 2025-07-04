@@ -65,7 +65,7 @@ struct IssueView: View {
         .formStyle(.grouped)
         .disabled(issue.isDeleted)
         .onReceive(issue.objectWillChange) {
-            dataController.queueSave()
+            dataController.save()
         }
         .onSubmit(dataController.save)
         .toolbar {
