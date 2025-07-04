@@ -102,9 +102,7 @@ struct StoreView: View {
         .task {
             await load()
         }
-        .onChange(of: dataController.fullVersionUnlocked) {
-            checkForPurchase()
-        }
+        .onChange(of: dataController.fullVersionUnlocked, checkForPurchase)
     }
 
     func checkForPurchase() {
